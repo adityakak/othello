@@ -2,6 +2,5 @@
 /shelf/
 /workspace.xml
 #Generated files to ignore
-../__pycache__/
-*.py[cod]
+__pycache__/app.cpython-38.pyc
 
