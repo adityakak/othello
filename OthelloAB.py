@@ -1,3 +1,4 @@
+""" This file is the code for the alpha-beta pruning engine for Othello"""
 neighbors = {}
 neighborsUp = {}
 neighborsUpRight = {}
@@ -7,14 +8,21 @@ neighborsDownRight = {}
 neighborsDownLeft = {}
 neighborsLeft = {}
 neighborsRight = {}
-quickDirection = {0: neighborsUp, 1: neighborsUpRight, 2: neighborsRight, 3: neighborsDownRight, 4: neighborsDown,
-                  5: neighborsDownLeft, 6: neighborsLeft, 7: neighborsUpLeft}
+quickDirection = {
+    0: neighborsUp,
+    1: neighborsUpRight,
+    2: neighborsRight,
+    3: neighborsDownRight,
+    4: neighborsDown,
+    5: neighborsDownLeft,
+    6: neighborsLeft,
+    7: neighborsUpLeft}
 totalTimeHolder = 0
 
 '''
 ADVANCED
-Below are two dictionaries mapping board states to other board states. With this when the AI receives a state which is 
-kept within this "book" it knows immediately what board state it would want to play next 
+Below are two dictionaries mapping board states to other board states. With this when the AI receives a state which is
+kept within this "book" it knows immediately what board state it would want to play next
 '''
 
 openingBookWhite = \
@@ -160,20 +168,34 @@ def createNeighbors():
         neighborsUpRight[value] = inBounds((x + 1), (y - 1))
         neighborsDownLeft[value] = inBounds((x - 1), (y + 1))
         neighborsDownRight[value] = inBounds((x + 1), (y + 1))
-        neighbors[value] = {neighborsUp[value], neighborsDown[value], neighborsRight[value], neighborsLeft[value],
-                            neighborsUpLeft[value], neighborsUpRight[value], neighborsDownLeft[value],
-                            neighborsDownRight[value]}
+        neighbors[value] = {
+            neighborsUp[value],
+            neighborsDown[value],
+            neighborsRight[value],
+            neighborsLeft[value],
+            neighborsUpLeft[value],
+            neighborsUpRight[value],
+            neighborsDownLeft[value],
+            neighborsDownRight[value]}
 
 
 def whichGroup(spots, value):
-    if spots == neighborsUp[value]: return 0
-    if spots == neighborsUpRight[value]: return 1
-    if spots == neighborsRight[value]: return 2
-    if spots == neighborsDownRight[value]: return 3
-    if spots == neighborsDown[value]: return 4
-    if spots == neighborsDownLeft[value]: return 5
-    if spots == neighborsLeft[value]: return 6
-    if spots == neighborsUpLeft[value]: return 7
+    if spots == neighborsUp[value]:
+        return 0
+    if spots == neighborsUpRight[value]:
+        return 1
+    if spots == neighborsRight[value]:
+        return 2
+    if spots == neighborsDownRight[value]:
+        return 3
+    if spots == neighborsDown[value]:
+        return 4
+    if spots == neighborsDownLeft[value]:
+        return 5
+    if spots == neighborsLeft[value]:
+        return 6
+    if spots == neighborsUpLeft[value]:
+        return 7
 
 
 def canFlip(board, value, token):
@@ -181,7 +203,8 @@ def canFlip(board, value, token):
         opp = 'x'
     else:
         opp = 'o'
-    directions = [False for x in range(0, 8)]  # Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft
+    # Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft
+    directions = [False for x in range(0, 8)]
     contPossible = set()
     for spots in neighbors[value]:
         if spots is not None and board[0][spots] == opp:
@@ -203,14 +226,22 @@ def canFlip(board, value, token):
 def possibleMoves(board, token):
     possibleSpots = set()
     for value in (board[1].union(board[2])):
-        if isClear(board, neighborsUp[value]): possibleSpots.add(neighborsUp[value])
-        if isClear(board, neighborsDown[value]): possibleSpots.add(neighborsDown[value])
-        if isClear(board, neighborsRight[value]): possibleSpots.add(neighborsRight[value])
-        if isClear(board, neighborsLeft[value]): possibleSpots.add(neighborsLeft[value])
-        if isClear(board, neighborsUpLeft[value]): possibleSpots.add(neighborsUpLeft[value])
-        if isClear(board, neighborsUpRight[value]): possibleSpots.add(neighborsUpRight[value])
-        if isClear(board, neighborsDownRight[value]): possibleSpots.add(neighborsDownRight[value])
-        if isClear(board, neighborsDownLeft[value]): possibleSpots.add(neighborsDownLeft[value])
+        if isClear(board, neighborsUp[value]):
+            possibleSpots.add(neighborsUp[value])
+        if isClear(board, neighborsDown[value]):
+            possibleSpots.add(neighborsDown[value])
+        if isClear(board, neighborsRight[value]):
+            possibleSpots.add(neighborsRight[value])
+        if isClear(board, neighborsLeft[value]):
+            possibleSpots.add(neighborsLeft[value])
+        if isClear(board, neighborsUpLeft[value]):
+            possibleSpots.add(neighborsUpLeft[value])
+        if isClear(board, neighborsUpRight[value]):
+            possibleSpots.add(neighborsUpRight[value])
+        if isClear(board, neighborsDownRight[value]):
+            possibleSpots.add(neighborsDownRight[value])
+        if isClear(board, neighborsDownLeft[value]):
+            possibleSpots.add(neighborsDownLeft[value])
     if None in possibleSpots:
         possibleSpots.remove(None)
     returnSpots = possibleSpots.copy()
@@ -250,7 +281,8 @@ def move(board, token, position):
         use = 1
     else:
         use = 2
-    directions = [False for x in range(0, 8)]  # Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft
+    # Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft
+    directions = [False for x in range(0, 8)]
     possible = set()
     for value in neighbors[position]:
         if value is not None and board[0][value] == opp:
@@ -274,7 +306,8 @@ def move(board, token, position):
         while newBoard[0][position] != token:
             if newBoard[0][position] == opp:
                 newBoard[notUse].remove(position)
-            newBoard[0] = newBoard[0][:position] + token + newBoard[0][position + 1:]
+            newBoard[0] = newBoard[0][:position] + \
+                token + newBoard[0][position + 1:]
             newBoard[use].add(position)
             position = direct[position]
         directions[saveIndex] = False
@@ -315,7 +348,13 @@ def gameOver(board, token):
         oppToken = 'o'
     else:
         oppToken = 'x'
-    if len(possibleMoves(board, token)) == 0 and len(possibleMoves(board, oppToken)):
+    if len(
+        possibleMoves(
+            board,
+            token)) == 0 and len(
+            possibleMoves(
+                board,
+                oppToken)):
         score = countScore(board, token)
         return score
     return float('inf')
@@ -421,7 +460,23 @@ def centerTest(board, token):
     averageX /= len(board[use])
     averageY /= len(board[use])
     average = int((averageX + (averageY * 8)))
-    if average not in {18, 19, 20, 21, 26, 27, 28, 29, 34, 35, 36, 37, 42, 43, 44, 45}:
+    if average not in {
+            18,
+            19,
+            20,
+            21,
+            26,
+            27,
+            28,
+            29,
+            34,
+            35,
+            36,
+            37,
+            42,
+            43,
+            44,
+            45}:
         return -70
     if average in {18, 21, 42, 45}:
         return 0
@@ -432,8 +487,8 @@ def centerTest(board, token):
 '''
 ADVANCED
 First Part of Edge Building/Play
-This function helps in maintaining proper edge structures and avoid unbalanced edges which can be taken advantage of and 
-result in steep losses of large swaths of edge space. Checks to see if pieces on the edge are "balanced" meaning they have 
+This function helps in maintaining proper edge structures and avoid unbalanced edges which can be taken advantage of and
+result in steep losses of large swaths of edge space. Checks to see if pieces on the edge are "balanced" meaning they have
 equal distance on either side while being connected
 '''
 
@@ -456,7 +511,8 @@ def balanceEdges(board, token):
             if board[0][i] != token:
                 connected = False
                 break
-        if (7 - rightMost == leftMost and connected) or cornersList[0] == token or cornersList[1] == token:
+        if (7 - rightMost ==
+                leftMost and connected) or cornersList[0] == token or cornersList[1] == token:
             edgeBalance[0] = True
     else:
         edgeBalance[0] = 0
@@ -476,7 +532,8 @@ def balanceEdges(board, token):
             if board[0][i] != token:
                 connected = False
                 break
-        if (7 - rightMost == leftMost and connected) or cornersList[2] == token or cornersList[3] == token:
+        if (7 - rightMost ==
+                leftMost and connected) or cornersList[2] == token or cornersList[3] == token:
             edgeBalance[1] = True
     else:
         edgeBalance[1] = 0
@@ -496,8 +553,8 @@ def balanceEdges(board, token):
             if board[0][i] != token:
                 connected = False
                 break
-        if (7 - (DownMost // 8) == (UpperMost // 8) and connected) or cornersList[0] == token or cornersList[
-            2] == token:
+        if (7 - (DownMost // 8) == (UpperMost // 8)
+                and connected) or cornersList[0] == token or cornersList[2] == token:
             edgeBalance[2] = True
     else:
         edgeBalance[2] = 0
@@ -517,8 +574,8 @@ def balanceEdges(board, token):
             if board[0][i] != token:
                 connected = False
                 break
-        if (7 - (DownMost // 8) == (UpperMost // 8) and connected) or cornersList[1] == token or cornersList[
-            3] == token:
+        if (7 - (DownMost // 8) == (UpperMost // 8)
+                and connected) or cornersList[1] == token or cornersList[3] == token:
             edgeBalance[3] = True
     else:
         edgeBalance[3] = 0
@@ -536,7 +593,7 @@ def balanceEdges(board, token):
 '''
 ADVANCED
 Second Part of Edge Building/Play
-This function weights edges which are connected to corners higher as that condition guarantees stability and is a 
+This function weights edges which are connected to corners higher as that condition guarantees stability and is a
 more powerful position on the board
 '''
 
@@ -604,11 +661,13 @@ def minStep(board, alpha, beta, currentDepth, depthLimit):
     xMoves = possibleMoves(board, 'x')
     oMoves = possibleMoves(board, 'o')
     gameState = gameOver(board, 'o')
-    if currentDepth == depthLimit or type(gameState) == int:
+    if currentDepth == depthLimit or isinstance(gameState, int):
         score = 0
         position = len(board[1]) + len(board[2])
-        if type(gameState) == int:
-            return gameState + ((countScore2(board, 'o') - countScore2(board, 'x')) * -1 * finalMultiplier)
+        if isinstance(gameState, int):
+            return gameState + \
+                ((countScore2(board, 'o') - countScore2(board, 'x'))
+                 * -1 * finalMultiplier)
         if position < earlyGame:  # CHANGES For early game, mobility is valued highly, but after we exit the start it
             # matters a bit less and is reflected in a drop to the weighting
             # score += len(oMoves) * -1 * myMoves * 2
@@ -617,17 +676,20 @@ def minStep(board, alpha, beta, currentDepth, depthLimit):
         else:
             # score += int(len(oMoves) * -1 * myMoves / 1.4) * 2
             # score += int(len(xMoves) * oppMoves / 1.4)
-            score += (len(oMoves) - len(xMoves)) * (movesMultiplier / 1.25) * -1
+            score += (len(oMoves) - len(xMoves)) * \
+                (movesMultiplier / 1.25) * -1
         if position < middleGame:  # CHANGES From the start to middle of the game tokens adjacent to the corner are
             # penalized at a certain amount, as we reach towards endgame that value is disregarded slight more and
             # finally completely ignored
             # score += cornerAdjacentTest(board, 'o') * cornerAdjacent
             # score += cornerAdjacentTest(board, 'x') * cornerAdjacent * -1
-            score += (cornerAdjacentTest(board, 'o') - cornerAdjacentTest(board, 'x')) * cornerAdjacent
+            score += (cornerAdjacentTest(board, 'o') -
+                      cornerAdjacentTest(board, 'x')) * cornerAdjacent
         elif position < 57:
             # score += cornerAdjacentTest(board, 'o') * cornerAdjacent / 3
             # score += cornerAdjacentTest(board, 'x') * (cornerAdjacent / 3) * -1
-            score += (cornerAdjacentTest(board, 'o') - cornerAdjacentTest(board, 'x')) * cornerAdjacent / 2
+            score += (cornerAdjacentTest(board, 'o') -
+                      cornerAdjacentTest(board, 'x')) * cornerAdjacent / 2
         # score += edgeTest(board, 'o') * -1
         # score += edgeTest(board, 'x')
         score += (edgeTest(board, 'o') - edgeTest(board, 'x')) * -1
@@ -636,12 +698,14 @@ def minStep(board, alpha, beta, currentDepth, depthLimit):
             # from favoring corners over potential piece differential or other more important endgame characteristics
             # score += cornerTest(board, 'o') * -1 * cornerMultiplier
             # score += cornerTest(board, 'x') * cornerMultiplier
-            score += (cornerTest(board, 'o') - cornerTest(board, 'x')) * -1 * cornerMultiplier
+            score += (cornerTest(board, 'o') -
+                      cornerTest(board, 'x')) * -1 * cornerMultiplier
         elif position < 57:  # CHANGES Decrease the value of the corners as the game progresses to stop the AI
             # from favoring corners over potential piece differential or other more important endgame characteristics
             # score += cornerTest(board, 'o') * -1 * cornerMultiplier / 4
             # score += cornerTest(board, 'x') * cornerMultiplier / 4
-            score += ((cornerTest(board, 'o') - cornerTest(board, 'x')) * -1 * cornerMultiplier) / 2
+            score += ((cornerTest(board, 'o') - cornerTest(board, 'x'))
+                      * -1 * cornerMultiplier) / 2
         if position < earlyGame:  # CHANGES Try to keep the AI within the 4x4 Square in the start of the game to
             # provide a more stable opening, disregarded after early game is complete
             # score += centerTest(board, 'o') * -1
@@ -649,7 +713,8 @@ def minStep(board, alpha, beta, currentDepth, depthLimit):
             score += (centerTest(board, 'o') - centerTest(board, 'x')) * -1
         # score += (pieceStabilityCount(board, 'o') - pieceStabilityCount(board, 'x')) * -1 * stableDiskMultiplier
         if position > 57:  # CHANGES Start caring about piece differential as the game reaches its end
-            score += (countScore2(board, 'o') - countScore2(board, 'x')) * closeToEndMultiplier * -1
+            score += (countScore2(board, 'o') -
+                      countScore2(board, 'x')) * closeToEndMultiplier * -1
         return score
     if gameState != float('inf'):
         return gameState
@@ -660,7 +725,7 @@ def minStep(board, alpha, beta, currentDepth, depthLimit):
     for nextBoard in possibleNewBoards:
         value = maxStep(nextBoard, alpha, beta, currentDepth + 1, depthLimit)
         results.append(value)
-        if type(value) != str and beta > value:  # PRUNING
+        if not isinstance(value, str) and beta > value:  # PRUNING
             beta = value
         if alpha >= beta:
             return min(results)
@@ -671,11 +736,12 @@ def maxStep(board, alpha, beta, currentDepth, depthLimit):
     xMoves = possibleMoves(board, 'x')
     oMoves = possibleMoves(board, 'o')
     gameState = gameOver(board, 'x')
-    if currentDepth == depthLimit or type(gameState) == int:
+    if currentDepth == depthLimit or isinstance(gameState, int):
         score = 0
         position = len(board[1]) + len(board[2])
-        if type(gameState) == int:
-            return gameState + (countScore2(board, 'x') - countScore2(board, 'o')) * finalMultiplier
+        if isinstance(gameState, int):
+            return gameState + (countScore2(board, 'x') -
+                                countScore2(board, 'o')) * finalMultiplier
         if position < earlyGame:  # CHANGES For early game, mobility is valued highly, but after we exit the start it
             # matters a bit less and is reflected in a drop to the weighting
             # score += len(oMoves) * -1 * oppMoves
@@ -690,11 +756,13 @@ def maxStep(board, alpha, beta, currentDepth, depthLimit):
             # finally completely ignored
             # score += cornerAdjacentTest(board, 'x') * -1 * cornerAdjacent
             # score += cornerAdjacentTest(board, 'o') * cornerAdjacent
-            score += (cornerAdjacentTest(board, 'x') - cornerAdjacentTest(board, 'o')) * -1 * cornerAdjacent
+            score += (cornerAdjacentTest(board, 'x') -
+                      cornerAdjacentTest(board, 'o')) * -1 * cornerAdjacent
         elif position < 57:
             # score += cornerAdjacentTest(board, 'x') * -1 * cornerAdjacent / 3
             # score += cornerAdjacentTest(board, 'o') * (cornerAdjacent / 3)
-            score += (cornerAdjacentTest(board, 'x') - cornerAdjacentTest(board, 'o')) * cornerAdjacent / -2
+            score += (cornerAdjacentTest(board, 'x') -
+                      cornerAdjacentTest(board, 'o')) * cornerAdjacent / -2
         # score += edgeTest(board, 'x')
         # score += edgeTest(board, 'o') * -1
         score += (edgeTest(board, 'x') - edgeTest(board, 'o'))
@@ -703,11 +771,13 @@ def maxStep(board, alpha, beta, currentDepth, depthLimit):
             # from favoring corners over potential piece differential or other more important endgame characteristics
             # score += cornerTest(board, 'x') * cornerMultiplier
             # score += cornerTest(board, 'o') * cornerMultiplier * -1
-            score += (cornerTest(board, 'x') - cornerTest(board, 'o')) * cornerMultiplier
+            score += (cornerTest(board, 'x') -
+                      cornerTest(board, 'o')) * cornerMultiplier
         elif position < 57:
             # score += cornerTest(board, 'x') * cornerMultiplier / 4
             # score += cornerTest(board, 'o') * cornerMultiplier * -1 / 4
-            score += ((cornerTest(board, 'x') - cornerTest(board, 'o')) * cornerMultiplier) / 2
+            score += ((cornerTest(board, 'x') - cornerTest(board, 'o'))
+                      * cornerMultiplier) / 2
         if position < earlyGame:  # CHANGES Try to keep the AI within the 4x4 Square in the start of the game to
             # provide a more stable opening, disregarded after early game is complete
             # score += centerTest(board, 'x')
@@ -715,7 +785,8 @@ def maxStep(board, alpha, beta, currentDepth, depthLimit):
             score += (centerTest(board, 'x') - centerTest(board, 'o'))
         # score += (pieceStabilityCount(board, 'x') - pieceStabilityCount(board, 'o')) * stableDiskMultiplier
         if position > 57:  # CHANGES Start caring about piece differential as the game reaches its end
-            score += (countScore2(board, 'x') - countScore2(board, 'o')) * closeToEndMultiplier
+            score += (countScore2(board, 'x') -
+                      countScore2(board, 'o')) * closeToEndMultiplier
         return int(score)
     if gameState != float('inf'):
         return gameState
@@ -726,7 +797,7 @@ def maxStep(board, alpha, beta, currentDepth, depthLimit):
     for nextBoard in possibleNextBoard(board, xMoves, 'x'):
         value = minStep(nextBoard, alpha, beta, currentDepth + 1, depthLimit)
         results.append(value)
-        if type(value) != str and value > alpha:  # PRUNING
+        if not isinstance(value, str) and value > alpha:  # PRUNING
             alpha = value
         if alpha >= beta:
             return max(results)
@@ -743,8 +814,9 @@ def maxMove(board, depthLimit):
     possibles = possibleMoves(board, 'x')
     alpha = float('-inf')
     beta = float('inf')
-    if board[
-        0] in openingBookBlack:  # ADVANCED The AI Looks for which move results in the board state held within the opening book dictionary
+    # ADVANCED The AI Looks for which move results in the board state held
+    # within the opening book dictionary
+    if board[0] in openingBookBlack:
         lookingFor = openingBookBlack[board[0]]
         possibleBoard = possibleNextBoard(board, possibles, 'x')
         possibleBoardNew = []
@@ -752,7 +824,8 @@ def maxMove(board, depthLimit):
             possibleBoardNew.append(items[0])
         position1 = possibleBoardNew.index(lookingFor)
         return possibles[position1], 0
-    for position, nextBoard in enumerate(possibleNextBoard(board, possibles, 'x')):
+    for position, nextBoard in enumerate(
+            possibleNextBoard(board, possibles, 'x')):
         # results.append(minStep(nextBoard, float('-inf'), float('inf'), 0, depthLimit))
         value = minStep(nextBoard, alpha, beta, 0, depthLimit)
         results.append(value)
@@ -780,8 +853,9 @@ def minMove(board, depthLimit):
     possibles = possibleMoves(board, 'o')
     alpha = float('-inf')
     beta = float('inf')
-    if board[
-        0] in openingBookWhite:  # ADVANCED The AI Looks for which move results in the board state held within the opening book dictionary
+    # ADVANCED The AI Looks for which move results in the board state held
+    # within the opening book dictionary
+    if board[0] in openingBookWhite:
         lookingFor = openingBookWhite[board[0]]
         possibleBoard = possibleNextBoard(board, possibles, 'o')
         possibleBoardNew = []
@@ -789,7 +863,8 @@ def minMove(board, depthLimit):
             possibleBoardNew.append(items[0])
         position1 = possibleBoardNew.index(lookingFor)
         return possibles[position1], 0
-    for position, nextBoard in enumerate(possibleNextBoard(board, possibles, 'o')):
+    for position, nextBoard in enumerate(
+            possibleNextBoard(board, possibles, 'o')):
         # results.append(maxStep(nextBoard, float('-inf'), float('inf'), 0, depthLimit))
         value = maxStep(nextBoard, alpha, beta, 0, depthLimit)
         results.append(value)
@@ -834,9 +909,33 @@ def wordsToBoard(letters):
     setX, setO = createSets(startString)
     createNeighbors()
     state = [startString, setX, setO]
-    letterTranslate = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11,
-                       'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21,
-                       'W': 22, 'X': 23, 'Y': 24, 'Z': 25}
+    letterTranslate = {
+        'A': 0,
+        'B': 1,
+        'C': 2,
+        'D': 3,
+        'E': 4,
+        'F': 5,
+        'G': 6,
+        'H': 7,
+        'I': 8,
+        'J': 9,
+        'K': 10,
+        'L': 11,
+        'M': 12,
+        'N': 13,
+        'O': 14,
+        'P': 15,
+        'Q': 16,
+        'R': 17,
+        'S': 18,
+        'T': 19,
+        'U': 20,
+        'V': 21,
+        'W': 22,
+        'X': 23,
+        'Y': 24,
+        'Z': 25}
     breakdown = []
     startSubstring = 0
     letters = letters.strip()
@@ -850,7 +949,8 @@ def wordsToBoard(letters):
             currentToken = 'x'
         elif numbers % 2 == 1:
             currentToken = 'o'
-        position = letterTranslate[items[:1].upper()] + ((int(items[1:]) - 1) * 8)
+        position = letterTranslate[items[:1].upper()] + \
+            ((int(items[1:]) - 1) * 8)
         state = move(state, currentToken, position)
     if currentToken == 'x':
         print('Black')
