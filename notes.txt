@@ -1,0 +1,3 @@
+have gui for the website somewhat resemble the gui of ARENA
+for switching between NN and AB mode use a horizontal switch which covers up the name of the other option
+
