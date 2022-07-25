@@ -1,4 +1,5 @@
 """ This file is the code for the alpha-beta pruning engine for Othello"""
+
 neighbors = {}
 neighborsUp = {}
 neighborsUpRight = {}
