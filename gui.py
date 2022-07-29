@@ -7,12 +7,16 @@ class Window(QWidget):
     def __init__(self):
         super().__init__()
 
+        def close_program():
+            print("Closing")
+            self.close()
+
         flags = Qt.WindowFlags(Qt.FramelessWindowHint)
         self.setWindowFlags(flags)
 
-        start_button = QPushButton('Start Watching')
-        start_button.setStyleSheet("background-color : green")
-        start_button.adjustSize()
+        close_button = QPushButton('Close Program')
+        close_button.clicked.connect(close_program)
+        
         self.show()
 
 def create():
