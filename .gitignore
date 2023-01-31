@@ -1,0 +1,7 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Generated ignored files
+__pycache__/
+.vscode
+.mypy_cache
