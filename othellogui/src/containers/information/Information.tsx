@@ -3,7 +3,7 @@ import './information.css';
 
 const Information = () => {
   return (
-    <div>Board Features</div>
+    <div>Othello Information</div>
   )
 }
 

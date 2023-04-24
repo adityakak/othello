@@ -1,10 +1,15 @@
 import React from 'react';
 import './App.css';
-import {Board, Headline, Score, Slider} from './components';
+import { Header, Footer, Information, BoardFeatures } from './containers';
+
 
 function App() {
   return (
     <div className="App">
+      <Header />
+      <BoardFeatures />
+      <Information />
+      <Footer />
     </div>
   );
 }
