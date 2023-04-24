@@ -1,5 +1,5 @@
 import React from 'react'
-import './explanation.css';
+import './board_features.css';
 
 const Board_Features = () => {
   return (
