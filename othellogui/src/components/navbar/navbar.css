@@ -5,3 +5,19 @@
 
   padding: 2rem 6rem;
 }
+
+.othello_navbar_links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.othello_navbar_logo {
+    margin-right: 2rem;
+}
+
+.othello_navbar_logo img {
+    width: 150px;
+    height: auto;
+}

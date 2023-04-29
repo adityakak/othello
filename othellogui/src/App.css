@@ -53,7 +53,7 @@ a {
   color: unset;
 }
 
-.gradient__bg {
+.othello_bg {
 
   /* ff 3.6+ */
   background:-moz-radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 0%, rgba(0, 212, 14, 1) 50%, rgba(0, 0, 0, 1) 100%);
@@ -70,4 +70,12 @@ a {
   /* global 92%+ browsers support */
   background:radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 0%, rgba(0, 212, 14, 1) 50%, rgba(0, 0, 0, 1) 100%);
 
+}
+
+.section__padding {
+  padding: 4rem 6rem;
+}
+
+.section__margin {
+  margin: 4rem 6rem;
 }

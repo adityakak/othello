@@ -8,7 +8,9 @@ function App() {
     <div className="App">
       <Navbar />
       <Header />
-      <BoardFeatures />
+      <div className='othello_bg'>
+        <BoardFeatures />
+      </div>
       <Information />
       <Footer />
     </div>

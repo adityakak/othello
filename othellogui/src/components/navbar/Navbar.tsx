@@ -8,7 +8,7 @@ const Navbar = () => {
     <div className="othello_navbar">
       <div className="othello_navbar_links">
         <div className='othello_navbar_logo'>
-          <img src={logo} alt="logo" style={{width: '150px', height: 'auto'}}/>
+          <img src={logo} alt="logo"/>
         </div>
       </div>
     </div>
