@@ -10,6 +10,11 @@ const Navbar = () => {
         <div className='othello_navbar_logo'>
           <img src={logo} alt="logo"/>
         </div>
+        <div className="othello_navbar_links_container">
+          <p><a href="#explain">Description</a></p>
+          <p><a href="#learn">How To Play</a></p>
+          <p><a href="#play">Play</a></p>
+        </div>
       </div>
     </div>
   )

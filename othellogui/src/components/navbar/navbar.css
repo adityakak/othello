@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 2rem 6rem;
+  background-color: #160025;
 }
 
 .othello_navbar_links {
@@ -18,6 +18,25 @@
 }
 
 .othello_navbar_logo img {
-    width: 150px;
+    width: 120px;
     height: auto;
+}
+
+.othello_navbar_links_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.othello_navbar_links_container p {
+    color: rgb(255, 255, 255);
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 0px;
+    text-transform: capitalize;
+    padding-top: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin: 0 1rem;
+    cursor: pointer;
 }
