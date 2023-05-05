@@ -7,11 +7,11 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Header />
       <div className='othello_bg'>
+        <Header />
         <BoardFeatures />
+        <Information />
       </div>
-      <Information />
       <Footer />
     </div>
   );

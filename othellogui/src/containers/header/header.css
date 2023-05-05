@@ -1,0 +1,56 @@
+.othello_header {
+    text-align: center;
+    font-size: 35px;
+    color: var(--gradient-text);
+}
+
+.othello_header_padding {
+    padding-top: 2rem;
+}
+
+.othello_headline h1 {
+    font-size: 50px;
+    font-weight: 800;
+    background: linear-gradient(to right, #c0d4d0 25%, #5bc25b 50%, #4a20e0 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.description {
+    position: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: #f2f2f2;
+}
+
+.othello_header_main_content p {
+    font-family: var(--font-family);
+    font-style: normal;
+    font-family: normal;
+    font-size: 20px;
+    line-height: 30px;
+    color: white;
+    margin: 1rem;
+    letter-spacing: .05rem;
+    text-align: center;
+    padding-right: 2.5rem;
+    padding-left: 2.5rem;
+    padding-top: 1rem;
+}
+
+.othello_header_main_content {
+    display: flex;
+    align-items: center;
+}
+
+.othello_header_main_content img {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    max-width: 400px;
+    padding-bottom: 2rem;
+}
