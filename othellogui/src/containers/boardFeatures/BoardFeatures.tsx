@@ -3,7 +3,9 @@ import './boardFeatures.css';
 
 const BoardFeatures = () => {
   return (
-    <div>Board Features</div>
+    <div>
+      Board Features
+    </div>
   )
 }
 

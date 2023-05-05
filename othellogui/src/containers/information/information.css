@@ -1,0 +1,42 @@
+.othello_information {
+    margin-top: 5rem;
+}
+
+.othello_information h1 {
+    font-size: 50px;
+    font-weight: 800;
+    background: linear-gradient(to right, #c0d4d0 25%, #5bc25b 50%, #4a20e0 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.othello_information h2 {
+    padding-top: 4rem;
+    font-size: 35px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+}
+
+.othello_rules {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 8rem;
+    margin-right: 8rem;
+}
+
+.othello_rules p {
+    font-family: var(--font-family);
+    font-style: normal;
+    font-family: normal;
+    font-size: 20px;
+
+    line-height: 30px;
+    color: white;
+
+    letter-spacing: .05rem;
+    text-align: center;
+    padding-top: 1rem;
+}

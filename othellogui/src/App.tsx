@@ -9,8 +9,8 @@ function App() {
       <Navbar />
       <div className='othello_bg'>
         <Header />
-        <BoardFeatures />
         <Information />
+        <BoardFeatures />
       </div>
       <Footer />
     </div>
