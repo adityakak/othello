@@ -40,3 +40,9 @@
     text-align: center;
     padding-top: 1rem;
 }
+
+.othello_rules img {
+    width: 200px;
+    margin: auto;
+    padding-top: 1rem;
+}
