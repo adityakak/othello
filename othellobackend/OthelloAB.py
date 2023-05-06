@@ -883,7 +883,7 @@ def minMove(board, depthLimit):
     return number3, number
 
 
-def findNextMove(board, token, depth):
+def findNextMoveAB(board, token, depth):
     setX, setO = createSets(board)
     createNeighbors()
     state = [board, setX, setO]
@@ -961,7 +961,7 @@ def wordsToBoard(letters):
     print(state)
 
 
-class Strategy:
+"""class Strategy:
     logging = True
 
     def best_strategy(self, board, player, best_move, still_running):
@@ -970,4 +970,5 @@ class Strategy:
         for i in range(15):
             best_move.value = findNextMove(board, player, depth)
             print(depth)
-            depth += 1
+            depth += 1"""
+
