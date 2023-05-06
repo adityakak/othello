@@ -4,7 +4,6 @@ import './footer.css';
 const Footer = () => {
   return (
     <div className="othello_footer">
-      footer
     </div>
   )
 }
