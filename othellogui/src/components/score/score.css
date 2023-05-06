@@ -13,6 +13,7 @@
   align-items: center;
   justify-content: center;
   max-width: 600px;
+  max-height: 150px;
 }
 
 .othello_score {
@@ -26,7 +27,7 @@
     font-size: 18px;
     margin-left: 0.5rem;
     padding-right: 15rem;
-  }
+}
 
 .othello_score_text_black {
     color: #fff;
