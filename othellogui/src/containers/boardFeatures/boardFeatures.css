@@ -3,6 +3,7 @@
 }
 
 .othello_play h1 {
+    padding-top: 2rem;
     font-size: 50px;
     font-weight: 800;
     background: linear-gradient(to right, #c0d4d0 25%, #5bc25b 50%, #4a20e0 75%);

@@ -10,14 +10,14 @@ const Information = () => {
       <h2> Rules of The Game</h2>
       <div className="othello_rules">
         <div>
-          <p> 1. The game is played on an 8x8 board with 64 identical game pieces called disks, which are light on one side and dark on the other.</p>
+          <p> 1. The game is played on an 8x8 board with 64 identical game pieces called disks, which are light on one side and dark on the other. (Columns are indexed A-H from left to right and rows are indexed 0-8 bottom to top)</p>
         </div>
         <div>
-          <p> 2. The game begins with four disks already placed on the board: two light disks and two dark disks, arranged with dark disks at D4 and E5 and light disks at D5 and E4. (Columns are indexed A-H from left to right and rows are indexed 0-8 bottom to top)</p>
+          <p> 2. The game begins with four disks already placed on the board: two light disks and two dark disks, arranged with dark disks at D4 and E5 and light disks at D5 and E4. The dark player moves first.</p>
         </div>
         <img src={othelloStart} alt="othelloStart"/>
         <div>
-          <p> 3. The dark player moves first. Dark must place a dark disk on the board, in such a position that there exists at least one straight (horizontal, vertical, or diagonal) occupied line between the new disk and another dark disk, with one or more contiguous light disks between them. In the below situation, dark has the following options for moves: </p>
+          <p> 3. Dark must place a dark disk on the board, in such a position that there exists at least one straight (horizontal, vertical, or diagonal) occupied line between the new disk and another dark disk, with one or more contiguous light disks between them. In the below situation, dark has the following options for moves: </p>
         </div>
         <img src={othelloPossible} alt="othelloPossible"/>
         <div>
