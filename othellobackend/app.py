@@ -1,4 +1,4 @@
-from OthelloAB import findNextMoveAB
+from OthelloAB import findNextMoveAB, findPossibleMoves
 from OthelloNN import findNextMoveNN
 import time
 from flask import Flask, request, jsonify
@@ -25,7 +25,7 @@ def response(move):
     return jsonify(response_json)
 
 @app.route('/minimax', method = ['POST'])
-def get_move():
+def get_moveAB():
     board = request.json['board']
     player = request.json['player']
     endTime = time.time() + duration
@@ -37,7 +37,7 @@ def get_move():
     return response(move)
 
 @app.route('/nn', method = ['POST'])
-def get_move():
+def get_moveNN():
     board = request.json['board']
     player = request.json['player']
     duration = 3.5
@@ -48,6 +48,16 @@ def get_move():
         move = findNextMoveNN(board, player, depth)
         depth += 1
     return response(move)
+
+@app.route('/validSquares', method = ['POST'])
+def possible():
+    board = request.json['board']
+    player = request.json['player']
+    coordinate = request.json['coordinate']
+    possible_moves = findPossibleMoves(board, player)
+    if coordinate not in possible_moves:
+        return jsonify({'valid': False})
+    return jsonify({'valid': True})
 
 
 if __name__ == '__main__':

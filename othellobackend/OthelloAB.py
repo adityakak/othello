@@ -894,6 +894,10 @@ def findNextMoveAB(board, token, depth):
     if token == 'x':
         moves, score = maxMove(state, depth)
         return moves
+    
+def findPossibleMoves(board, token):
+    createNeighbors()
+    return possibleMoves(board, token)
 
 
 '''
