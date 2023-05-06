@@ -1,9 +1,12 @@
-from OthelloAB import findNextMoveAB, findPossibleMoves
-from OthelloNN import findNextMoveNN
+from OthelloAB import findNextMoveAB, findPossibleMoves, newBoardState
+#from OthelloNN import findNextMoveNN
 import time
+import sys
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 duration = 3.5
 
@@ -24,18 +27,27 @@ def response(move):
     response_json['blackScore'] = blackScore
     return jsonify(response_json)
 
-@app.route('/minimax', method = ['POST'])
+@app.route('/minimax', methods=['POST', 'OPTIONS'])
 def get_moveAB():
+    if request.method == 'OPTIONS':
+        # Handle preflight request
+        response = jsonify({'status': 'success'})
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        return response
     board = request.json['board']
     player = request.json['player']
     endTime = time.time() + duration
     depth = 1
     move = None
+    stringBoard = convertBoardToString(board)
     while time.time() < endTime:
-        move = findNextMoveAB(board, player, depth)
+        move = findNextMoveAB(stringBoard, player, depth)
         depth += 1
-    return response(move)
+    newState = newBoardState(stringBoard, player, move)
+    whiteScore, blackScore = parseScore(newState)
+    return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore}), 200
 
+"""
 @app.route('/nn', method = ['POST'])
 def get_moveNN():
     board = request.json['board']
@@ -48,17 +60,49 @@ def get_moveNN():
         move = findNextMoveNN(board, player, depth)
         depth += 1
     return response(move)
-
-@app.route('/validSquares', method = ['POST'])
+"""
+@app.route('/validSquares', methods=['POST', 'OPTIONS'])
 def possible():
-    board = request.json['board']
-    player = request.json['player']
-    coordinate = request.json['coordinate']
-    possible_moves = findPossibleMoves(board, player)
-    if coordinate not in possible_moves:
-        return jsonify({'valid': False})
-    return jsonify({'valid': True})
+    if request.method == 'OPTIONS':
+        # Handle preflight request
+        response = jsonify({'status': 'success'})
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        return response
+    
+    data = request.get_json()
+    board = data['board']
+    player = data['player']
+    coordinate = data['coordinate']
 
+    position = (coordinate[0] * 8) + coordinate[1]
+
+    stringBoard = convertBoardToString(board)
+    possible_moves = findPossibleMoves(stringBoard, player)
+
+    if position not in possible_moves:
+        return jsonify({'valid': False, 'board': data['board']}), 200
+    newState = newBoardState(stringBoard, player, position)
+    whiteScore, blackScore = parseScore(newState)
+    return jsonify({'valid': True, 'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore}), 200
+
+def convertBoardToString(board):
+    string_board = ""
+    for row in board:
+        for element in row:
+            if element == 0:
+                string_board += "."
+            elif element == 1:
+                string_board += "o"
+            elif element == 2:
+                string_board += "x"
+    return string_board
+
+def convertBoardToArray(board):
+    array_board = [[] for _ in range(8)]
+    for i in range(8):
+        for j in range(8):
+            array_board[i].append(0 if board[i*8 + j] == "." else 1 if board[i*8 + j] == "o" else 2)
+    return array_board
 
 if __name__ == '__main__':
     app.run(host = "0.0.0.0")

@@ -7,7 +7,6 @@ const BoardFeatures = () => {
 
   const handleSliderChange = (isChecked: boolean) => {
     setSliderMode(isChecked);
-    console.log('Slider isChecked:', isChecked);
   };
 
   return (
@@ -25,11 +24,7 @@ const BoardFeatures = () => {
       <div className="othello_slider_div_caption">
         <p> Choose between playing against a minimax algorithim (MM) or a neural network (NN) version of the AI</p>
       </div>
-      <Score 
-        whiteScore={0}
-        blackScore={0}
-      />
-      <Board />
+      <Board engineMode={sliderMode} />
     </div>
   )
 }

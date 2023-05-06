@@ -26,8 +26,8 @@ const Score: React.FC<ScoreProps> = props => {
 }
 
 Score.defaultProps = {
-  whiteScore: 0,
-  blackScore: 0
+  whiteScore: 2,
+  blackScore: 2
 }
 
 

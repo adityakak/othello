@@ -889,15 +889,20 @@ def findNextMoveAB(board, token, depth):
     state = [board, setX, setO]
     # printBoard(state)
     if token == 'o':
-        moves, score = minMove(state, depth)
-        return moves
+        move, score = minMove(state, depth)
     if token == 'x':
-        moves, score = maxMove(state, depth)
-        return moves
+        move, score = maxMove(state, depth)
+    return move
     
 def findPossibleMoves(board, token):
+    setX, setO = createSets(board)
     createNeighbors()
-    return possibleMoves(board, token)
+    return possibleMoves([board, setX, setO], token)
+
+def newBoardState(board, token, position):
+    setX, setO = createSets(board)
+    createNeighbors()
+    return move([board, setX, setO], token, position)[0]
 
 
 '''

@@ -17,9 +17,10 @@
 }
 
 .othello_score {
-    padding-top: 2rem;
+    padding-top: 1rem;
     justify-content: center;
     display: flex;
+    margin-bottom: 1rem;
 }
 
 .othello_score_text_white {
