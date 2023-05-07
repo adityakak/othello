@@ -458,8 +458,10 @@ def centerTest(board, token):
         x, y = value % 8, value // 8
         averageX += x
         averageY += y
-    averageX /= len(board[use])
-    averageY /= len(board[use])
+    if(len(board[use]) != 0):
+        averageX /= len(board[use])
+    if(len(board[use]) != 0):
+        averageY /= len(board[use])
     average = int((averageX + (averageY * 8)))
     if average not in {
             18,
