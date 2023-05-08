@@ -47,7 +47,6 @@ const Board: React.FC<BoardProps> = props => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data, "1");
         setBoardState({
           board: data.board,
           turn: data.valid ? 2 : 1,

@@ -1,5 +1,5 @@
 from OthelloAB import findNextMoveAB, findPossibleMoves, newBoardState
-from OthelloNN import findNextMoveNN
+#from OthelloNN import findNextMoveNN
 import time
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -91,11 +91,10 @@ def possible():
 
     stringBoard = convertBoardToString(board)
     possible_moves = findPossibleMoves(stringBoard, player)
-
+    whiteScore, blackScore = parseScore(stringBoard)
     if position not in possible_moves:
-        return jsonify({'valid': False, 'board': data['board']}), 200
+        return jsonify({'valid': False, 'board': data['board'], 'whiteScore': whiteScore, 'blackScore':blackScore}), 200
     newState = newBoardState(stringBoard, player, position)
-    whiteScore, blackScore = parseScore(newState)
     return jsonify({'valid': True, 'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore}), 200
 
 def convertBoardToString(board):
