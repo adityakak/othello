@@ -13,3 +13,6 @@ An AI designed for the widely played board game Othello (Reversi) with two seper
 </p>
 
 # Demo
+
+https://user-images.githubusercontent.com/43500008/236730367-cd32121d-5495-406f-83ed-5b2edf309044.mp4
+
