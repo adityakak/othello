@@ -1,5 +1,5 @@
 from OthelloAB import findNextMoveAB, findPossibleMoves, newBoardState
-#from OthelloNN import findNextMoveNN
+from OthelloNN import findNextMoveNN
 import time
 from flask import Flask, request, jsonify
 from flask_cors import CORS

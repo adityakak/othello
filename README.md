@@ -1,0 +1,1 @@
+![Logo](https://github.com/adityakak/othello/blob/master/othellogui/src/assets/logo.png)
