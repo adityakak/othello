@@ -2,13 +2,14 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    margin-right: 26rem;
-    margin-left: 26rem;
-  }
+    margin-right: 32.5vw;
+    margin-left: 32.5vw;
+    margin-top: 1vw;
+}
 .othello_board square {
-    margin: 0.5rem;
+    margin: .1vw;
 }
 
 .othello_play {
-    margin-top: 1rem;
+    margin-top: .5vw;
 }

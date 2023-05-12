@@ -1,11 +1,11 @@
 import React from 'react'
-import './header.css';
-import headerImage from '../../assets/headerImage.png';
+import './header.css'
+import headerImage from '../../assets/headerImage.png'
 
-const Header = () => {
+const Header: React.FC = (): JSX.Element => {
   return (
     <div className="othello_header_padding">
-      <div className="othello_header"> 
+      <div className="othello_header">
         <div className="othello_headline" id="explain">
           <h1> OthelloAI </h1>
         </div>
@@ -21,4 +21,3 @@ const Header = () => {
 }
 
 export default Header
-

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import './boardFeatures.css';
-import { Score, Slider, Board } from '../../components';
+import './boardFeatures.css'
+import { Slider, Board } from '../../components'
 
-const BoardFeatures = () => {
-  const [sliderMode, setSliderMode] = useState(false);
+const BoardFeatures = (): JSX.Element => {
+  const [sliderMode, setSliderMode] = useState(false)
 
-  const handleSliderChange = (isChecked: boolean) => {
-    setSliderMode(isChecked);
-  };
+  const handleSliderChange = (isChecked: boolean): void => {
+    setSliderMode(isChecked)
+  }
 
   return (
     <div className="othello_play" id="play">
@@ -30,4 +30,3 @@ const BoardFeatures = () => {
 }
 
 export default BoardFeatures
-

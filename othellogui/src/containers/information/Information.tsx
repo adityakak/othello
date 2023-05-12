@@ -1,9 +1,9 @@
 import React from 'react'
-import './information.css';
-import othelloStart from '../../assets/othelloStart.png';
-import othelloPossible from '../../assets/othelloPossible.png';
+import './information.css'
+import othelloStart from '../../assets/othelloStart.png'
+import othelloPossible from '../../assets/othelloPossible.png'
 
-const Information = () => {
+const Information = (): JSX.Element => {
   return (
     <div className="othello_information" id="learn">
       <h1> How To Play </h1>
@@ -29,4 +29,3 @@ const Information = () => {
 }
 
 export default Information
-

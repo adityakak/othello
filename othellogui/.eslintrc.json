@@ -12,7 +12,8 @@
     "overrides": [
     ],
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "project": "./othellogui/tsconfig.json"
     },
     "plugins": [
         "react"

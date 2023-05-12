@@ -1,9 +1,9 @@
-import React from 'react';
-import './App.css';
-import { Header, Footer, Information, BoardFeatures } from './containers';
-import { Navbar } from './components';
+import React from 'react'
+import './App.css'
+import { Header, Footer, Information, BoardFeatures } from './containers'
+import { Navbar } from './components'
 
-function App() {
+function App (): JSX.Element {
   return (
     <div className="App">
       <Navbar />
@@ -14,7 +14,7 @@ function App() {
       </div>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

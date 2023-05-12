@@ -1,8 +1,8 @@
 import React from 'react'
-import './navbar.css';
-import logo from '../../assets/logo.png';
+import './navbar.css'
+import logo from '../../assets/logo.png'
 
-const Navbar = () => {
+const Navbar = (): JSX.Element => {
   return (
     <div className="othello_navbar">
       <div className="othello_navbar_links">
