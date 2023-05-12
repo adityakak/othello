@@ -38,36 +38,38 @@ const Board: React.FC<BoardProps> = props => {
   useEffect(() => {
     if (boardState.turn === 1 && boardState.row !== -1 && boardState.col !== -1) {
       fetch('http://127.0.0.1:5000/validSquares', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({ board: boardState.board, player: 'x', coordinate: [boardState.row, boardState.col] }),
-    })
-      .then(res => res.json())
-      .then(data => {
-        setBoardState({
-          board: data.board,
-          turn: data.valid ? 2 : 1,
-          row: -1,
-          col: -1,
-          whiteScore: data.whiteScore,
-          blackScore: data.blackScore,
-        });
-      });
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({ board: boardState.board, player: 'x', coordinate: [boardState.row, boardState.col] })
+      })
+        .then(async res => await res.json())
+        .then(data => {
+          setBoardState({
+            board: data.board,
+            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+            turn: (data.valid) ? 2 : 1,
+            row: -1,
+            col: -1,
+            whiteScore: data.whiteScore,
+            blackScore: data.blackScore
+          })
+        })
+        .catch(err => { console.log(err) })
     }
-    if(boardState.turn == 2) {
-      console.log(boardState, "2");
+    if (boardState.turn === 2) {
+      console.log(boardState, '2')
       fetch('http://127.0.0.1:5000/minimax', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json',
+          Accept: 'application/json'
         },
-        body: JSON.stringify({ board: boardState.board, player: 'o'}),
+        body: JSON.stringify({ board: boardState.board, player: 'o' })
       })
-        .then(res => res.json())
+        .then(async res => await res.json())
         .then(data => {
           setBoardState(prevState => ({
             ...prevState,
@@ -77,6 +79,7 @@ const Board: React.FC<BoardProps> = props => {
             blackScore: data.blackScore
           }))
         })
+        .catch(err => { console.log(err) })
     }
   }, [boardState])
 
@@ -99,7 +102,9 @@ const Board: React.FC<BoardProps> = props => {
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         const squareId = `${row}-${col}`
-        squares.push(<Square key={squareId} value={squareId} state={boardState.board[row][col]} onClick={() => handleSquareClick(row, col)} />);
+        squares.push(<Square key={squareId} value={squareId} state={boardState.board[row][col]} onClick={() => {
+          handleSquareClick(row, col)
+        }} />)
       }
     }
     return squares

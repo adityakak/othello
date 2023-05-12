@@ -1,33 +1,27 @@
-import React from 'react';
+import React from 'react'
 
-import './slider.css';
+import './slider.css'
 
 interface SliderProps {
-    id: string;
-
-    onChange: (isChecked: boolean) => void; 
-    
-    "data-on"?: string;
-    
-    isChecked: boolean;
-    
-    "data-off"?: string;
-    
-    description?: string;
+  id: string
+  onChange: (isChecked: boolean) => void
+  'data-on'?: string
+  isChecked: boolean
+  'data-off'?: string
+  description?: string
 }
 
 const Slider: React.FC<SliderProps> = props => {
-    
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.onChange && props.onChange(event.target.checked);
-    };
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-optional-chain
+    props.onChange && props.onChange(event.target.checked)
+  }
 
-    const labelId = `label-${props.id}`;
-    const descriptionId = `description-${props.id}`;
+  const labelId = `label-${props.id}`
+  const descriptionId = `description-${props.id}`
 
-    const labelBy = labelId + ' ' + descriptionId;
-    
-    return (
+  const labelBy = labelId + ' ' + descriptionId
+  return (
         <label htmlFor={props.id} className="switch">
             <input
                 id={props.id}
@@ -41,12 +35,12 @@ const Slider: React.FC<SliderProps> = props => {
                 aria-labelledby={labelBy}
             />
         </label>
-    );
+  )
 }
 
 Slider.defaultProps = {
-    "data-on": 'ON',
-    "data-off": 'OFF'
+  'data-on': 'ON',
+  'data-off': 'OFF'
 }
 
-export default Slider;
+export default Slider

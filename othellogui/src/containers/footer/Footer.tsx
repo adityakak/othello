@@ -1,7 +1,7 @@
 import React from 'react'
-import './footer.css';
+import './footer.css'
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <div className="othello_footer">
     </div>
@@ -9,4 +9,3 @@ const Footer = () => {
 }
 
 export default Footer
-

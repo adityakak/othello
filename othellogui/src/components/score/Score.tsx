@@ -1,11 +1,11 @@
 import React from 'react'
-import './score.css';
-import whitePiece from '../../assets/whitePiece.png';
-import blackPiece from '../../assets/blackPiece.png';
+import './score.css'
+import whitePiece from '../../assets/whitePiece.png'
+import blackPiece from '../../assets/blackPiece.png'
 
 interface ScoreProps {
-  whiteScore: number;
-  blackScore: number;
+  whiteScore: number
+  blackScore: number
 }
 
 const Score: React.FC<ScoreProps> = props => {
@@ -29,6 +29,5 @@ Score.defaultProps = {
   whiteScore: 2,
   blackScore: 2
 }
-
 
 export default Score

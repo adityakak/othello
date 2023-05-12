@@ -1,7 +1,7 @@
 import React from 'react'
-import './explanation.css';
+import './explanation.css'
 
-const Explanation = () => {
+const Explanation = (): JSX.Element => {
   return (
     <div>Explaination</div>
   )
