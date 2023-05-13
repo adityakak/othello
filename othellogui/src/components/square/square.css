@@ -1,19 +1,17 @@
 .othello_square{
-    width: 75px; /* Adjust the width of the button */
-    height: 75px; /* Adjust the height of the button */
+    width: 4vw; /* Adjust the width of the button */
+    height: 4vw; /* Adjust the height of the button */
     background-color: #089464; /* Set the background color */
     border: none; /* Remove the border */
-    color: white; /* Set the text color */
-    font-size: 16px; /* Set the font size */
     cursor: pointer; /* Add a cursor pointer on hover */
-    margin: 1px;
+    margin: .075vw;
     cursor: default;
   }
 
 .othello_square img{
-    width: 75px;
+    width: 4vw;
   }
 
 .othello_black img {
-    margin-top: -20px;
+    margin-top: -1.1vw;
 }

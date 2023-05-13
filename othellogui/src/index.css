@@ -13,4 +13,14 @@
   --color-blog: #042c54;
   --color-text: #81AFDD;
   --color-subtext: #FF8A71;
+
+  --header-size: 3vw;
+  --header-weight: 800;
+
+  --subheader-size: 2vw;
+  --subheader-weight: 600;
+
+  --text-size: 1.05vw;
+  --letter-spacing: .04vw;
+  --text-line-height: 1.65vw;
 }

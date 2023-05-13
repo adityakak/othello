@@ -1,38 +1,38 @@
 .othello_whiteScore img {
-    max-width: 120px;
+    max-width: 6.5vw;
 }
 
 .othello_blackScore img {
-    max-width: 130px;
+    max-width: 6.9vw;
 }
 
 .othello_score_box {
   background-color: #252525;
-  padding: 20px;
+  padding: 1vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 600px;
-  max-height: 150px;
+  max-width: 30vw;
+  max-height: 7vw;
 }
 
 .othello_score {
-    padding-top: 1rem;
+    padding-top: 1vw;
     justify-content: center;
     display: flex;
-    margin-bottom: 1rem;
+    margin-bottom: 1vw;
 }
 
 .othello_score_text_white {
     color: #fff;
-    font-size: 18px;
-    margin-left: 0.5rem;
-    padding-right: 15rem;
+    font-size: 1vw;
+    margin-left: .5vw;
+    padding-right: 5vw;
 }
 
 .othello_score_text_black {
     color: #fff;
-    font-size: 18px;
-    margin-right: 0.5rem;
-    padding-left: .5rem;
+    font-size: 1vw;
+    margin-right: .5vw;
+    padding-left: .5vw;
   }
