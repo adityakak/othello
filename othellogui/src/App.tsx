@@ -9,7 +9,11 @@ function App (): JSX.Element {
       <Navbar />
       <div className='othello_bg'>
         <Header />
+      </div>
+      <div className='othello_bg_alternate'>
         <Information />
+      </div>
+      <div className='othello_bg'>
         <BoardFeatures />
       </div>
       <Footer />
