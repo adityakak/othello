@@ -1,9 +1,18 @@
 .othello_navbar {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 2vw 4vw;
+  position: fixed;
+
+  padding: .5vw 4vw 1vw 4vw;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+
   background-color: #160025;
+  border-bottom: 1px solid gray;
 }
 
 .othello_navbar_links {

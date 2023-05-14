@@ -14,6 +14,7 @@
   justify-content: center;
   max-width: 30vw;
   max-height: 7vw;
+  border-radius: 1vw;
 }
 
 .othello_score {
