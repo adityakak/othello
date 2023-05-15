@@ -12,11 +12,10 @@
     font-family: var(--font-family);
     font-size: var(--header-size);
     font-weight: var(--header-weight);
-    /* background: linear-gradient(to right, #c0d4d0 25%, #5bc25b 50%, #4a20e0 75%);
+    background: linear-gradient(to right, #c0d4d0 25%, #5bc25b 50%, #4a20e0 75%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text; */
-    color: white;
+    background-clip: text;
     text-align: center;
 }
 
@@ -26,10 +25,6 @@
     justify-content: center;
     align-items: center;
     padding-top: 2vw;
-}
-
-.othello_slider_div > *:not(:last-child) {
-    margin-right: 3vw;
 }
 
 .othello_slider_div_caption {

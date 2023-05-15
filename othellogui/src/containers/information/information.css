@@ -4,41 +4,34 @@
 
 .othello_information {
     padding-top: 4vw;
-    padding-bottom: 4vw;
 }
 
 .othello_information h1 {
     font-family: var(--font-family);
     font-size: var(--header-size);
     font-weight: var(--header-weight);
-    /* background: linear-gradient(to right, #c0d4d0 25%, #5bc25b 50%, #4a20e0 75%);
+    background: linear-gradient(to right, #c0d4d0 25%, #5bc25b 50%, #4a20e0 75%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text; */
-    color: white;
+    background-clip: text;
     text-align: center;
-    padding-bottom: 2vw;
 }
 
-/* .othello_information h2 {
+.othello_information h2 {
     padding-top: 3vw;
     font-family: var(--font-family);
     font-size: var(--subheader-size);
     font-weight: var(--subheader-weight);
     color: white;
     text-align: center;
-} */
+}
 
 .othello_rules {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-left: 15vw;
-    margin-right: 15vw;
-    background-color: #101B27;
-    border-radius: 2vw;
-    padding-bottom: 2vw;
-    padding-top: .5vw;
+    margin-left: 12vw;
+    margin-right: 12vw;
 }
 
 .othello_rules p {
@@ -52,12 +45,11 @@
 
     letter-spacing: var(--letter-spacing);
     text-align: center;
-    padding: 1vw;
+    padding-top: 1vw;
 }
 
 .othello_rules img {
     width: 12vw;
     margin: auto;
     padding-top: 1vw;
-    padding-bottom: 2vw;
 }
