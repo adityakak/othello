@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './boardFeatures.css'
 import { Slider, Board } from '../../components'
-// import Button from '@mui/material/Button'
+import Button from '@mui/material/Button'
 
 const BoardFeatures = (): JSX.Element => {
   const [sliderModeAI, setSliderModeAI] = useState(false)
@@ -33,9 +33,9 @@ const BoardFeatures = (): JSX.Element => {
           data-off="W"
         />
       </div>
-      {/* <div>
-        <Button variant="contained"> </Button>
-      </div> */}
+      <div>
+        <Button variant="contained"> Exist </Button>
+      </div>
       {/* <div className="othello_slider_div_caption">
         <p> Choose between playing against a minimax algorithim (MM) or a neural network (NN) version of the AI</p>
       </div> */}
