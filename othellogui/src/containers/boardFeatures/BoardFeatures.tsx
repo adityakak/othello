@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 const BoardFeatures = (): JSX.Element => {
   const [sliderModeAI, setSliderModeAI] = useState(false)
   const [sliderModeColor, setSliderModeColor] = useState(false)
+  const [startMode, setStartMode] = useState(false)
 
   const handleSliderChangeAI = (isChecked: boolean): void => {
     setSliderModeAI(isChecked)
@@ -33,8 +34,8 @@ const BoardFeatures = (): JSX.Element => {
           data-off="W"
         />
       </div>
-      <div>
-        <Button variant="contained"> Exist </Button>
+      <div className='othello_button_div'>
+        <Button variant="contained" onClick={() => { setStartMode(!startMode) }}> Start </Button>
       </div>
       {/* <div className="othello_slider_div_caption">
         <p> Choose between playing against a minimax algorithim (MM) or a neural network (NN) version of the AI</p>

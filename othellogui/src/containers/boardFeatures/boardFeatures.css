@@ -49,3 +49,9 @@
     text-align: center;
     padding-top: 1vw;
 }
+.othello_button_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2vw 0vw 0vw;
+}
