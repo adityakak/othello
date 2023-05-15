@@ -6,8 +6,8 @@ import othelloPossible from '../../assets/othelloPossible.png'
 const Information = (): JSX.Element => {
   return (
     <div className="othello_information" id="learn">
-      <h1> How To Play </h1>
-      <h2> Rules of The Game</h2>
+      {/* <h1> How To Play </h1> */}
+      <h1> Rules of The Game</h1>
       <div className="othello_rules">
         <div>
           <p> 1. The game is played on an 8x8 board with 64 identical game pieces called disks, which are light on one side and dark on the other. (Columns are indexed A-H from left to right and rows are indexed 0-8 bottom to top)</p>
