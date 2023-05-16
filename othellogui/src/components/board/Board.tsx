@@ -20,7 +20,10 @@ interface BoardState {
 
 const Board: React.FC<BoardProps> = props => {
   const humanSide = props.engineSide ? 'o' : 'x'
+  const humanSideTurn = props.engineSide ? 2 : 1 // Number representing the color of the human player
+
   const aiSide = props.engineSide ? 'x' : 'o'
+  const aiSideTurn = props.engineSide ? 1 : 2
 
   const initialArray: number[][] = Array.from({ length: 8 }, () => Array(8).fill(0))
   initialArray[3][3] = 1
@@ -41,7 +44,20 @@ const Board: React.FC<BoardProps> = props => {
   const [isClickable, setIsClickable] = useState<boolean>(true)
 
   useEffect(() => {
-    if (boardState.turn === 1 && boardState.row !== -1 && boardState.col !== -1 && props.gameMode) {
+    if (props.engineSide) {
+      if (!isClickable) return
+      if (boardState.turn === 3) return
+      setIsClickable(false)
+      setBoardState(prevState => ({
+        ...prevState,
+        turn: 1
+      }))
+      setIsClickable(true)
+    }
+  }, [props.gameMode])
+
+  useEffect(() => {
+    if (boardState.turn === humanSideTurn && boardState.row !== -1 && boardState.col !== -1 && props.gameMode) {
       fetch('http://127.0.0.1:5000/validSquares', {
         method: 'POST',
         headers: {
@@ -55,7 +71,7 @@ const Board: React.FC<BoardProps> = props => {
           setBoardState({
             board: data.board,
             // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-            turn: (data.valid) ? 2 : 1,
+            turn: (data.valid) ? aiSideTurn : humanSideTurn,
             row: -1,
             col: -1,
             whiteScore: data.whiteScore,
@@ -64,7 +80,7 @@ const Board: React.FC<BoardProps> = props => {
         })
         .catch(err => { console.log(err) })
     }
-    if (boardState.turn === 2 && props.gameMode) {
+    if (boardState.turn === aiSideTurn && props.gameMode) {
       console.log(boardState, '2')
       fetch('http://127.0.0.1:5000/minimax', {
         method: 'POST',
@@ -78,7 +94,7 @@ const Board: React.FC<BoardProps> = props => {
         .then(data => {
           setBoardState(prevState => ({
             ...prevState,
-            turn: data.gameOver === 1 ? 2 : (data.gameOver === 0 ? 1 : 3), // 0 Normal , 1 Keep, 2 Game Over
+            turn: data.gameOver === 1 ? aiSideTurn : (data.gameOver === 0 ? humanSideTurn : 3), // 0 Normal , 1 Keep, 2 Game Over
             board: data.board,
             whiteScore: data.whiteScore,
             blackScore: data.blackScore
@@ -94,7 +110,7 @@ const Board: React.FC<BoardProps> = props => {
     setIsClickable(false)
     setBoardState(prevState => ({
       ...prevState,
-      turn: 1,
+      turn: props.engineSide ? 2 : 1,
       row,
       col
     }))

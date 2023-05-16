@@ -26,7 +26,8 @@ def response(move):
     response_json['blackScore'] = blackScore
     return jsonify(response_json)
 
-@app.route('/minimax', methods=['POST', 'OPTIONS'])
+@app.route('/minimax', methods=['POST', 'OPTIONS']) # Returns JSON with the new board, white score, black score, and game over status
+                                                    # Game over status: 0 = game not over, 1 = keep turn because opponent cannot move but we can, 2 = game over and no more moves
 def get_moveAB():
     if request.method == 'OPTIONS':
         # Handle preflight request
