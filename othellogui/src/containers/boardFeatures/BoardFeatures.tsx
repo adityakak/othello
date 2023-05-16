@@ -7,12 +7,16 @@ const BoardFeatures = (): JSX.Element => {
   const [sliderModeAI, setSliderModeAI] = useState(false)
   const [sliderModeColor, setSliderModeColor] = useState(false)
   const [startMode, setStartMode] = useState(false)
+  const [boardRenderKey, setBoardRenderKey] = useState(0)
 
   const handleSliderChangeAI = (isChecked: boolean): void => {
     setSliderModeAI(isChecked)
   }
   const handleSliderChangeColor = (isChecked: boolean): void => {
     setSliderModeColor(isChecked)
+  }
+  const handleResign: () => void = () => {
+    setBoardRenderKey(prevKey => prevKey + 1)
   }
 
   return (
@@ -42,10 +46,10 @@ const BoardFeatures = (): JSX.Element => {
           )
         : (
       <div className='othello_button_div'>
-        <Button variant="contained" onClick={() => { setStartMode(!startMode) }}> Resign </Button>
+        <Button variant="contained" onClick={() => { setStartMode(!startMode); handleResign() }}> Resign & Reset </Button>
       </div>
           )}
-      <Board engineMode={sliderModeAI} engineSide={sliderModeColor} gameMode={startMode} />
+      <Board key={boardRenderKey} engineMode={sliderModeAI} engineSide={sliderModeColor} gameMode={startMode} />
     </div>
   )
 }
