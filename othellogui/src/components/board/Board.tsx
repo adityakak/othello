@@ -81,7 +81,7 @@ const Board: React.FC<BoardProps> = props => {
         .catch(err => { console.log(err) })
     }
     if (boardState.turn === aiSideTurn && props.gameMode) {
-      console.log(boardState, '2')
+      // console.log(boardState, '2')
       fetch('http://127.0.0.1:5000/minimax', {
         method: 'POST',
         headers: {

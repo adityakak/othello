@@ -9,12 +9,15 @@ interface SliderProps {
   isChecked: boolean
   'data-off'?: string
   description?: string
+  canSlide: boolean
 }
 
 const Slider: React.FC<SliderProps> = props => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-optional-chain
-    props.onChange && props.onChange(event.target.checked)
+    if (props.canSlide) {
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-optional-chain
+      props.onChange && props.onChange(event.target.checked)
+    }
   }
 
   const labelId = `label-${props.id}`

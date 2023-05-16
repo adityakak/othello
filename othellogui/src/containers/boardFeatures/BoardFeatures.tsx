@@ -29,6 +29,7 @@ const BoardFeatures = (): JSX.Element => {
           isChecked={sliderModeAI}
           data-on="MM"
           data-off="NN"
+          canSlide={!startMode}
         />
         <Slider
           id="colorSlider"
@@ -36,6 +37,7 @@ const BoardFeatures = (): JSX.Element => {
           isChecked={sliderModeColor}
           data-on="B"
           data-off="W"
+          canSlide={!startMode}
         />
       </div>
       {!startMode
