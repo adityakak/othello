@@ -34,13 +34,18 @@ const BoardFeatures = (): JSX.Element => {
           data-off="W"
         />
       </div>
+      {!startMode
+        ? (
       <div className='othello_button_div'>
         <Button variant="contained" onClick={() => { setStartMode(!startMode) }}> Start </Button>
       </div>
-      {/* <div className="othello_slider_div_caption">
-        <p> Choose between playing against a minimax algorithim (MM) or a neural network (NN) version of the AI</p>
-      </div> */}
-      <Board engineMode={sliderModeAI} />
+          )
+        : (
+      <div className='othello_button_div'>
+        <Button variant="contained" onClick={() => { setStartMode(!startMode) }}> Resign </Button>
+      </div>
+          )}
+      <Board engineMode={sliderModeAI} engineSide={sliderModeColor} gameMode={startMode} />
     </div>
   )
 }

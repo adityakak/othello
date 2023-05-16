@@ -5,6 +5,8 @@ import { Score } from '../../components'
 
 interface BoardProps {
   engineMode: boolean // true = minimax, false = neural network
+  engineSide: boolean // true = black, false = white
+  gameMode: boolean // true = start, false = resign
 }
 
 interface BoardState {
@@ -17,6 +19,9 @@ interface BoardState {
 }
 
 const Board: React.FC<BoardProps> = props => {
+  const humanSide = props.engineSide ? 'o' : 'x'
+  const aiSide = props.engineSide ? 'x' : 'o'
+
   const initialArray: number[][] = Array.from({ length: 8 }, () => Array(8).fill(0))
   initialArray[3][3] = 1
   initialArray[3][4] = 2
@@ -36,14 +41,14 @@ const Board: React.FC<BoardProps> = props => {
   const [isClickable, setIsClickable] = useState<boolean>(true)
 
   useEffect(() => {
-    if (boardState.turn === 1 && boardState.row !== -1 && boardState.col !== -1) {
+    if (boardState.turn === 1 && boardState.row !== -1 && boardState.col !== -1 && props.gameMode) {
       fetch('http://127.0.0.1:5000/validSquares', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         },
-        body: JSON.stringify({ board: boardState.board, player: 'x', coordinate: [boardState.row, boardState.col] })
+        body: JSON.stringify({ board: boardState.board, player: humanSide, coordinate: [boardState.row, boardState.col] })
       })
         .then(async res => await res.json())
         .then(data => {
@@ -59,7 +64,7 @@ const Board: React.FC<BoardProps> = props => {
         })
         .catch(err => { console.log(err) })
     }
-    if (boardState.turn === 2) {
+    if (boardState.turn === 2 && props.gameMode) {
       console.log(boardState, '2')
       fetch('http://127.0.0.1:5000/minimax', {
         method: 'POST',
@@ -67,7 +72,7 @@ const Board: React.FC<BoardProps> = props => {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         },
-        body: JSON.stringify({ board: boardState.board, player: 'o' })
+        body: JSON.stringify({ board: boardState.board, player: aiSide })
       })
         .then(async res => await res.json())
         .then(data => {
@@ -98,7 +103,6 @@ const Board: React.FC<BoardProps> = props => {
 
   const renderSquares = (): JSX.Element[] => {
     const squares = []
-    console.log(boardState, 'render')
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         const squareId = `${row}-${col}`
