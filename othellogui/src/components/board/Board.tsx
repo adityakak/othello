@@ -58,6 +58,7 @@ const Board: React.FC<BoardProps> = props => {
 
   useEffect(() => {
     if (boardState.turn === humanSideTurn && boardState.row !== -1 && boardState.col !== -1 && props.gameMode) {
+      console.log(boardState, 'human')
       fetch('http://127.0.0.1:5000/validSquares', {
         method: 'POST',
         headers: {
@@ -108,6 +109,7 @@ const Board: React.FC<BoardProps> = props => {
     if (!isClickable) return
     if (boardState.turn === 3) return
     setIsClickable(false)
+    console.log(row, col)
     setBoardState(prevState => ({
       ...prevState,
       turn: props.engineSide ? 2 : 1,
@@ -135,6 +137,7 @@ const Board: React.FC<BoardProps> = props => {
       <Score
         whiteScore={boardState.whiteScore}
         blackScore={boardState.blackScore}
+        arrowSide={boardState.turn === 1 || boardState.turn === 0}
       />
       <div className="othello_board">
         {renderSquares()}

@@ -10,6 +10,7 @@
   background-color: #252525;
   padding: 1vw;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   max-width: 30vw;
@@ -28,7 +29,7 @@
     color: #fff;
     font-size: 1vw;
     margin-left: .5vw;
-    padding-right: 5vw;
+    padding-right: .5vw;
 }
 
 .othello_score_text_black {
@@ -36,4 +37,28 @@
     font-size: 1vw;
     margin-right: .5vw;
     padding-left: .5vw;
-  }
+}
+
+.arrow {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 5px;
+}
+  
+.right {
+    transform: rotate(-45deg)
+}
+.down {
+    transform: rotate(45deg)
+}
+.left {
+    transform: rotate(135deg)
+}
+.up {
+    transform: rotate(225deg)
+}
+
+.othello_score_arrow {
+    padding: 2vw;
+}

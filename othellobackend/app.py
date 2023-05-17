@@ -26,6 +26,11 @@ def response(move):
     response_json['blackScore'] = blackScore
     return jsonify(response_json)
 
+def addPossibleMovesToBoard(stringBoard, possibleMoves, opponent):
+    for coordinate in possibleMoves:
+        stringBoard = stringBoard[:coordinate] + 'b' + stringBoard[coordinate + 1:] if opponent == 'x' else stringBoard[:coordinate] + 'w' + stringBoard[coordinate + 1:]
+    return stringBoard
+
 @app.route('/minimax', methods=['POST', 'OPTIONS']) # Returns JSON with the new board, white score, black score, and game over status
                                                     # Game over status: 0 = game not over, 1 = keep turn because opponent cannot move but we can, 2 = game over and no more moves
 def get_moveAB():
@@ -34,16 +39,21 @@ def get_moveAB():
         response = jsonify({'status': 'success'})
         response.headers.add('Access-Control-Allow-Methods', 'POST')
         return response
+    
     board = request.json['board']
     player = request.json['player']
     stringBoard = convertBoardToString(board)
 
     opponent = 'x' if player == 'o' else 'o'
-    if len(findPossibleMoves(stringBoard, player)) == 0:
+
+    currentBoardPlayerPossibleMoves = findPossibleMoves(stringBoard, player)
+    if len(currentBoardPlayerPossibleMoves) == 0:
         whiteScore, blackScore = parseScore(stringBoard)
-        if len(findPossibleMoves(stringBoard, opponent)) == 0:
+        currentBoardOpponentPossibleMoves = findPossibleMoves(stringBoard, opponent)
+        if len(currentBoardOpponentPossibleMoves) == 0:
             return jsonify({'board': convertBoardToArray(stringBoard), 'whiteScore': whiteScore, 'blackScore': blackScore, 'gameOver': 2}), 200
         else:
+            stringBoard = addPossibleMovesToBoard(stringBoard, currentBoardOpponentPossibleMoves, opponent)
             return jsonify({'board': convertBoardToArray(stringBoard), 'whiteScore': whiteScore, 'blackScore': blackScore, 'gameOver': 0}), 200
         
     endTime = time.time() + duration
@@ -54,11 +64,17 @@ def get_moveAB():
         depth += 1
 
     newState = newBoardState(stringBoard, player, move)
+
     whiteScore, blackScore = parseScore(newState)
-    if len(findPossibleMoves(newState, opponent)) == 0 and len(findPossibleMoves(newState, player)) == 0:
+
+    newBoardOpponentPossibleMoves = findPossibleMoves(newState, opponent)
+    newBoardPlayerPossibleMoves = findPossibleMoves(newState, player)
+
+    if len(newBoardOpponentPossibleMoves) == 0 and len(newBoardPlayerPossibleMoves) == 0:
         return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 2}), 200
-    elif len(findPossibleMoves(newState, opponent)) == 0:
+    elif len(newBoardOpponentPossibleMoves) == 0:
         return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 1}), 200
+    newState = addPossibleMovesToBoard(newState, newBoardOpponentPossibleMoves, opponent)
     return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 0}), 200
 
 """
@@ -108,13 +124,25 @@ def convertBoardToString(board):
                 string_board += "o"
             elif element == 2:
                 string_board += "x"
+            else:
+                string_board += "."
     return string_board
 
 def convertBoardToArray(board):
     array_board = [[] for _ in range(8)]
     for i in range(8):
         for j in range(8):
-            array_board[i].append(0 if board[i*8 + j] == "." else 1 if board[i*8 + j] == "o" else 2)
+            if board[i*8 + j] == ".":
+                array_board[i].append(0)
+            elif board[i*8 + j] == "o":
+                array_board[i].append(1)
+            elif board[i*8 + j] == "x":
+                array_board[i].append(2)
+            elif board[i*8 + j] == "w":
+                array_board[i].append(3)
+            elif board[i*8 + j] == "b":
+                array_board[i].append(4)
+            # array_board[i].append(0 if board[i*8 + j] == "." else 1 if board[i*8 + j] == "o" else 2)
     return array_board
 
 if __name__ == '__main__':
