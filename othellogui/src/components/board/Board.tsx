@@ -51,10 +51,6 @@ const Board: React.FC<BoardProps> = props => {
       if (!isClickable) return
       if (boardState.turn === 3) return
       setIsClickable(false)
-      // setBoardState(prevState => ({
-      //   ...prevState,
-      //   turn: 1
-      // }))
       setBoardState(prevState => {
         const updatedBoard = [...prevState.board]
         updatedBoard[3][2] = 0
