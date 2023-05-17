@@ -48,7 +48,7 @@ const BoardFeatures = (): JSX.Element => {
           )
         : (
       <div className='othello_button_div'>
-        <Button variant="contained" onClick={() => { setStartMode(!startMode); handleResign() }}> Resign & Reset </Button>
+        <Button variant="contained" onClick={() => { setStartMode(!startMode); handleResign() }}> Reset </Button>
       </div>
           )}
       <Board key={boardRenderKey} engineMode={sliderModeAI} engineSide={sliderModeColor} gameMode={startMode} />

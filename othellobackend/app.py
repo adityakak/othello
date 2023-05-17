@@ -42,6 +42,7 @@ def get_moveAB():
     
     board = request.json['board']
     player = request.json['player']
+    currentMove = request.json['move']
     stringBoard = convertBoardToString(board)
 
     opponent = 'x' if player == 'o' else 'o'
@@ -51,10 +52,10 @@ def get_moveAB():
         whiteScore, blackScore = parseScore(stringBoard)
         currentBoardOpponentPossibleMoves = findPossibleMoves(stringBoard, opponent)
         if len(currentBoardOpponentPossibleMoves) == 0:
-            return jsonify({'board': convertBoardToArray(stringBoard), 'whiteScore': whiteScore, 'blackScore': blackScore, 'gameOver': 2}), 200
+            return jsonify({'board': convertBoardToArray(stringBoard), 'whiteScore': whiteScore, 'blackScore': blackScore, 'gameOver': 2, 'move': currentMove}), 200
         else:
             stringBoard = addPossibleMovesToBoard(stringBoard, currentBoardOpponentPossibleMoves, opponent)
-            return jsonify({'board': convertBoardToArray(stringBoard), 'whiteScore': whiteScore, 'blackScore': blackScore, 'gameOver': 0}), 200
+            return jsonify({'board': convertBoardToArray(stringBoard), 'whiteScore': whiteScore, 'blackScore': blackScore, 'gameOver': 0, 'move': currentMove}), 200
         
     endTime = time.time() + duration
     depth = 1
@@ -71,11 +72,11 @@ def get_moveAB():
     newBoardPlayerPossibleMoves = findPossibleMoves(newState, player)
 
     if len(newBoardOpponentPossibleMoves) == 0 and len(newBoardPlayerPossibleMoves) == 0:
-        return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 2}), 200
+        return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 2, 'move': currentMove + 1}), 200
     elif len(newBoardOpponentPossibleMoves) == 0:
-        return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 1}), 200
+        return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 1, 'move': currentMove + 1}), 200
     newState = addPossibleMovesToBoard(newState, newBoardOpponentPossibleMoves, opponent)
-    return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 0}), 200
+    return jsonify({'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'gameOver': 0, 'move': currentMove + 1}), 200
 
 """
 @app.route('/nn', method = ['POST'])
@@ -103,6 +104,7 @@ def possible():
     board = data['board']
     player = data['player']
     coordinate = data['coordinate']
+    currentMove = request.json['move']
 
     position = (coordinate[0] * 8) + coordinate[1]
 
@@ -110,9 +112,9 @@ def possible():
     possible_moves = findPossibleMoves(stringBoard, player)
     whiteScore, blackScore = parseScore(stringBoard)
     if position not in possible_moves:
-        return jsonify({'valid': False, 'board': data['board'], 'whiteScore': whiteScore, 'blackScore':blackScore}), 200
+        return jsonify({'valid': False, 'board': data['board'], 'whiteScore': whiteScore, 'blackScore':blackScore, 'move': currentMove}), 200
     newState = newBoardState(stringBoard, player, position)
-    return jsonify({'valid': True, 'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore}), 200
+    return jsonify({'valid': True, 'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'move': currentMove + 1}), 200
 
 def convertBoardToString(board):
     string_board = ""

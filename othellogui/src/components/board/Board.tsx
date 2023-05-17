@@ -16,6 +16,7 @@ interface BoardState {
   turn: number // 0 no one, 1 white, 2 black
   row: number
   col: number
+  move: number
 }
 
 const Board: React.FC<BoardProps> = props => {
@@ -37,35 +38,64 @@ const Board: React.FC<BoardProps> = props => {
     blackScore: 2,
     turn: 0,
     row: -1,
-    col: -1
+    col: -1,
+    move: 0
   }
 
   const [boardState, setBoardState] = useState<BoardState>(initialBoardState)
   const [isClickable, setIsClickable] = useState<boolean>(true)
 
   useEffect(() => {
+    console.log(props.engineSide)
     if (props.engineSide) {
       if (!isClickable) return
       if (boardState.turn === 3) return
       setIsClickable(false)
-      setBoardState(prevState => ({
-        ...prevState,
-        turn: 1
-      }))
+      // setBoardState(prevState => ({
+      //   ...prevState,
+      //   turn: 1
+      // }))
+      setBoardState(prevState => {
+        const updatedBoard = [...prevState.board]
+        updatedBoard[3][2] = 0
+        updatedBoard[2][3] = 0
+        updatedBoard[4][5] = 0
+        updatedBoard[5][4] = 0
+        return {
+          ...prevState,
+          board: updatedBoard,
+          turn: 1
+        }
+      })
+      setIsClickable(true)
+    } else {
+      if (!isClickable) return
+      if (boardState.turn === 3) return
+      setIsClickable(false)
+      setBoardState(prevState => {
+        const updatedBoard = [...prevState.board]
+        updatedBoard[3][2] = 4
+        updatedBoard[2][3] = 4
+        updatedBoard[4][5] = 4
+        updatedBoard[5][4] = 4
+        return {
+          ...prevState,
+          board: updatedBoard
+        }
+      })
       setIsClickable(true)
     }
-  }, [props.gameMode])
+  }, [props.gameMode, props.engineSide])
 
   useEffect(() => {
     if (boardState.turn === humanSideTurn && boardState.row !== -1 && boardState.col !== -1 && props.gameMode) {
-      console.log(boardState, 'human')
       fetch('http://127.0.0.1:5000/validSquares', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         },
-        body: JSON.stringify({ board: boardState.board, player: humanSide, coordinate: [boardState.row, boardState.col] })
+        body: JSON.stringify({ board: boardState.board, player: humanSide, coordinate: [boardState.row, boardState.col], move: boardState.move })
       })
         .then(async res => await res.json())
         .then(data => {
@@ -76,20 +106,20 @@ const Board: React.FC<BoardProps> = props => {
             row: -1,
             col: -1,
             whiteScore: data.whiteScore,
-            blackScore: data.blackScore
+            blackScore: data.blackScore,
+            move: data.move
           })
         })
         .catch(err => { console.log(err) })
     }
     if (boardState.turn === aiSideTurn && props.gameMode) {
-      // console.log(boardState, '2')
       fetch('http://127.0.0.1:5000/minimax', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         },
-        body: JSON.stringify({ board: boardState.board, player: aiSide })
+        body: JSON.stringify({ board: boardState.board, player: aiSide, move: boardState.move })
       })
         .then(async res => await res.json())
         .then(data => {
@@ -98,14 +128,15 @@ const Board: React.FC<BoardProps> = props => {
             turn: data.gameOver === 1 ? aiSideTurn : (data.gameOver === 0 ? humanSideTurn : 3), // 0 Normal , 1 Keep, 2 Game Over
             board: data.board,
             whiteScore: data.whiteScore,
-            blackScore: data.blackScore
+            blackScore: data.blackScore,
+            move: data.move
           }))
         })
         .catch(err => { console.log(err) })
     }
   }, [boardState])
 
-  const handleSquareClick = (row: number, col: number): void => { //  AI plays white, human plays black
+  const handleSquareClick = (row: number, col: number): void => {
     if (!isClickable) return
     if (boardState.turn === 3) return
     setIsClickable(false)
@@ -137,7 +168,7 @@ const Board: React.FC<BoardProps> = props => {
       <Score
         whiteScore={boardState.whiteScore}
         blackScore={boardState.blackScore}
-        arrowSide={boardState.turn === 1 || boardState.turn === 0}
+        arrowSide={boardState.move % 2 === 0}
       />
       <div className="othello_board">
         {renderSquares()}
