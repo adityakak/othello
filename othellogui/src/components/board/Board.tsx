@@ -46,7 +46,6 @@ const Board: React.FC<BoardProps> = props => {
   const [isClickable, setIsClickable] = useState<boolean>(true)
 
   useEffect(() => {
-    console.log(props.engineSide)
     if (props.engineSide) {
       if (!isClickable) return
       if (boardState.turn === 3) return
@@ -136,7 +135,6 @@ const Board: React.FC<BoardProps> = props => {
     if (!isClickable) return
     if (boardState.turn === 3) return
     setIsClickable(false)
-    console.log(row, col)
     setBoardState(prevState => ({
       ...prevState,
       turn: props.engineSide ? 2 : 1,
@@ -161,11 +159,25 @@ const Board: React.FC<BoardProps> = props => {
 
   return (
     <div className="othello_play">
-      <Score
-        whiteScore={boardState.whiteScore}
-        blackScore={boardState.blackScore}
-        arrowSide={boardState.move % 2 === 0}
-      />
+      {boardState.turn !== 3
+        ? (
+            console.log(boardState.turn),
+        <Score
+          whiteScore={boardState.whiteScore}
+          blackScore={boardState.blackScore}
+          arrowSide={boardState.move % 2 === 0}
+        />
+          )
+        : (
+        <div className="othello_gameover_wrapper">
+          <div className="othello_gameover">
+            <h1>Game Over</h1>
+            <h2>{boardState.whiteScore > boardState.blackScore ? 'White Wins' : 'Black Wins'}</h2>
+            <h3> Score: {boardState.whiteScore} - {boardState.blackScore} </h3>
+          </div>
+        </div>
+          )
+      }
       <div className="othello_board">
         {renderSquares()}
       </div>

@@ -3,11 +3,11 @@ from OthelloAB import findNextMoveAB, findPossibleMoves, newBoardState
 import time
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import multiprocessing
 
 app = Flask(__name__)
 CORS(app)
 
-duration = 3.5
 
 def parseScore(board):
     whiteScore = blackScore = 0
@@ -31,6 +31,20 @@ def addPossibleMovesToBoard(stringBoard, possibleMoves, opponent):
         stringBoard = stringBoard[:coordinate] + 'b' + stringBoard[coordinate + 1:] if opponent == 'x' else stringBoard[:coordinate] + 'w' + stringBoard[coordinate + 1:]
     return stringBoard
 
+def findNextMoveABWithTimeout(stringBoard, player, depth, duration):
+    manager = multiprocessing.Manager()
+    move = manager.Value(int, -1)
+    process = multiprocessing.Process(target=findNextMoveAB, args=(stringBoard, player, depth, move))
+
+    process.start()
+    process.join(duration)
+
+    if process.is_alive():
+        process.terminate()
+        process.join()
+
+    return move.value
+
 @app.route('/minimax', methods=['POST', 'OPTIONS']) # Returns JSON with the new board, white score, black score, and game over status
                                                     # Game over status: 0 = game not over, 1 = keep turn because opponent cannot move but we can, 2 = game over and no more moves
 def get_moveAB():
@@ -40,6 +54,7 @@ def get_moveAB():
         response.headers.add('Access-Control-Allow-Methods', 'POST')
         return response
     
+    duration = 2
     board = request.json['board']
     player = request.json['player']
     currentMove = request.json['move']
@@ -60,9 +75,16 @@ def get_moveAB():
     endTime = time.time() + duration
     depth = 1
     move = None
+    # while time.time() < endTime:
+    #     move = findNextMoveAB(stringBoard, player, depth)
+    #     depth += 1
     while time.time() < endTime:
-        move = findNextMoveAB(stringBoard, player, depth)
+        moveFound = findNextMoveABWithTimeout(stringBoard, player, depth, endTime - time.time())
+        if moveFound != -1:
+            move = moveFound
         depth += 1
+        print(move)
+
 
     newState = newBoardState(stringBoard, player, move)
 
@@ -110,10 +132,11 @@ def possible():
 
     stringBoard = convertBoardToString(board)
     possible_moves = findPossibleMoves(stringBoard, player)
-    whiteScore, blackScore = parseScore(stringBoard)
+    oldWhiteScore, oldBlackScore = parseScore(stringBoard)
     if position not in possible_moves:
-        return jsonify({'valid': False, 'board': data['board'], 'whiteScore': whiteScore, 'blackScore':blackScore, 'move': currentMove}), 200
+        return jsonify({'valid': False, 'board': data['board'], 'whiteScore': oldWhiteScore, 'blackScore': oldBlackScore, 'move': currentMove}), 200
     newState = newBoardState(stringBoard, player, position)
+    whiteScore, blackScore = parseScore(newState)
     return jsonify({'valid': True, 'board': convertBoardToArray(newState), 'whiteScore': whiteScore, 'blackScore':blackScore, 'move': currentMove + 1}), 200
 
 def convertBoardToString(board):

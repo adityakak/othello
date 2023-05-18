@@ -885,7 +885,7 @@ def minMove(board, depthLimit):
     return number3, number
 
 
-def findNextMoveAB(board, token, depth):
+def findNextMoveAB(board, token, depth, move_object):
     setX, setO = createSets(board)
     createNeighbors()
     state = [board, setX, setO]
@@ -894,7 +894,8 @@ def findNextMoveAB(board, token, depth):
         move, score = minMove(state, depth)
     if token == 'x':
         move, score = maxMove(state, depth)
-    return move
+    # return move
+    move_object.value = move
     
 def findPossibleMoves(board, token):
     setX, setO = createSets(board)

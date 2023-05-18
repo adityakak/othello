@@ -13,3 +13,32 @@
 .othello_play {
     margin-top: 0vw;
 }
+
+.othello_gameover_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1vw;
+    margin-bottom: 1vw;
+}
+
+.othello_gameover {
+    background-color: #252525;
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 30vw;
+    max-height: 7vw;
+    border-radius: 1vw;
+    color: white;
+}
+
+/* .othello_gameover h2 {
+    margin-bottom: 2.5vw;
+} */
+
+.othello_gameover h3 {
+    margin-bottom: 2.5vw;
+}
