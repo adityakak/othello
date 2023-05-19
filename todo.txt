@@ -1,0 +1,5 @@
+Mobile Rendering
+Implement PPO RL System
+Log In Feature
+Navigate Through Game (Chess.com ish)
+Database to see past games

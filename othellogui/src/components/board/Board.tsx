@@ -134,6 +134,7 @@ const Board: React.FC<BoardProps> = props => {
   const handleSquareClick = (row: number, col: number): void => {
     if (!isClickable) return
     if (boardState.turn === 3) return
+    if (!props.gameMode) return
     setIsClickable(false)
     setBoardState(prevState => ({
       ...prevState,
@@ -161,7 +162,6 @@ const Board: React.FC<BoardProps> = props => {
     <div className="othello_play">
       {boardState.turn !== 3
         ? (
-            console.log(boardState.turn),
         <Score
           whiteScore={boardState.whiteScore}
           blackScore={boardState.blackScore}
