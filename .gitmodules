@@ -1,0 +1,3 @@
+[submodule "othellobackend/othelloRL"]
+	path = othellobackend/othelloRL
+	url = https://github.com/adityakak/SIMPLE_Othello.git
