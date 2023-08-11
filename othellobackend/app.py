@@ -83,7 +83,7 @@ def get_moveAB():
         if moveFound != -1:
             move = moveFound
         depth += 1
-        print(move)
+        print(depth)
 
 
     newState = newBoardState(stringBoard, player, move)
